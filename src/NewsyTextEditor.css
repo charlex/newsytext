@@ -1,0 +1,16 @@
+.NewsyTextEditor {
+  background: #eee;
+  height: 100%;
+  padding: 50px;
+  flex: 1;
+
+  font-size: 20px;
+}
+
+
+.Block-Widget {
+  background: red;
+  display: block;
+  width: 100px;
+  height: 100px;
+}
