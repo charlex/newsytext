@@ -6,16 +6,6 @@ import 'draft-js/dist/Draft.css';
 import blocks from './blocks';
 import './NewsyTextEditor.css';
 
-function mediaBlockRenderer(block) {
-  if (block.getType() === 'atomic') {
-    return {
-      component: blocks.Widget,
-      readOnly: true,
-    };
-  }
-
-  return null;
-}
 
 /**
  * Name ideas:
@@ -30,6 +20,25 @@ class NewsyTextEditor extends React.Component {
     onChange: PropTypes.func.isRequired,
     editorState: PropTypes.shape().isRequired,
   }
+  state = {
+    readonly: true,
+  }
+  mediaBlockRenderer(block) {
+    if (block.getType() === 'atomic') {
+      return {
+        component: blocks.Widget,
+        readOnly: true,
+        editable: false,
+        props: {
+          foo: 'bar',
+          onFocusChange: (isFocused) => {
+            this.setState({ readonly: isFocused });
+          },
+        },
+      };
+    }
+    return null;
+  }
   handleKeyCommand(command) {
     const newState = RichUtils.handleKeyCommand(this.props.editorState, command);
     if (newState) {
@@ -42,7 +51,10 @@ class NewsyTextEditor extends React.Component {
     return (
       <div className="NewsyTextEditor">
         <Editor
-          blockRendererFn={mediaBlockRenderer}
+          handleKeyCommand={null}
+          placeholder="Start a document..."
+          blockRendererFn={block => this.mediaBlockRenderer(block)}
+          readonly={this.state.readonly}
           editorState={this.props.editorState}
           handleKeyCommand={cmd => this.handleKeyCommand(cmd)}
           onChange={es => this.props.onChange(es)}

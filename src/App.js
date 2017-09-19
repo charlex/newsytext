@@ -10,6 +10,7 @@ class App extends Component {
     super(props);
     this.state = {
       editorState: EditorState.createEmpty(),
+      // widgetFocused: false
     };
   }
   onChange(editorState) {
