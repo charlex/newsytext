@@ -1,6 +1,9 @@
 {
   "extends": "airbnb",
   "parser": "babel-eslint",
+  "parserOptions": {
+    "spread": true
+  },
   "rules": {
     "no-underscore-dangle": [
       1
